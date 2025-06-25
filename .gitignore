@@ -4,6 +4,7 @@
 # But keep these files
 !encrypted.pdf.enc
 !index.html
+!style.css
 
 # Still ignore the encryption script and virtual environment
 encrypt.py
