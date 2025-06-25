@@ -1,3 +1,11 @@
-/encrypt.py
-/Juan_Rodriguez_Resume.pdf
-/venv
+# Ignore everything by default
+*
+
+# But keep these files
+!encrypted.pdf.enc
+!index.html
+
+# Still ignore the encryption script and virtual environment
+encrypt.py
+Juan_Rodriguez_Resume.pdf
+venv/
