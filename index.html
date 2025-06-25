@@ -28,6 +28,8 @@
   <iframe id="pdf-frame"></iframe>
 
   <script>
+    const expectedHash = "bac3e01f671ad1ecc08a17a9d7e2fb9fdd92a19e038836be5955a40bd7e038be"; 
+
     async function decryptAndView() {
       const pass = document.getElementById('pass').value;
       const errorDiv = document.getElementById('error-message');
@@ -65,6 +67,17 @@
           throw new Error("Invalid decryption key.");
         }
 
+        // 🧩 Step 3: Integrity check using SHA-256
+        const hashBuffer = await crypto.subtle.digest("SHA-256", u8);
+        const hashArray = Array.from(new Uint8Array(hashBuffer));
+        const hashHex = hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+
+        if (hashHex !== expectedHash) {
+          errorDiv.textContent = '❌ PDF integrity check failed. The file may be corrupted or altered.';
+          return;
+        }
+
+        // 🖼️ Display PDF
         const blob = new Blob([u8], { type: 'application/pdf' });
         const url = URL.createObjectURL(blob);
         const iframe = document.getElementById('pdf-frame');
